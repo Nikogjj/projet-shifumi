@@ -13,6 +13,8 @@ void shifumi (char* jeujoueur1,int random, char* joueur1,int* scorejoueur1);
 int genEntropicSeed();
 float aleatoire(float minimum,float maximum);
 
+
+
 int main(){
     genEntropicSeed();
     // int random=aleatoire(1,4);
