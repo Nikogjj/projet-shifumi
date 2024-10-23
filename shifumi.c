@@ -9,39 +9,38 @@ void jeu1(char* jeujoueur1);
 // void jeu2(char* jeujoueur2);
 int chartohand1 (char* jeujoueur1,char* joueur1);
 int chartohand2 (int random);
-void shifumi (char* jeujoueur1,int random, char* joueur1,int* scorejoueur1);
+void shifumi (char* jeujoueur1,int random, char* joueur1,int* scorejoueur1,int* scorePC);
 int genEntropicSeed();
 float aleatoire(float minimum,float maximum);
 
     
 
-    // void fichier(){FILE* file=fopen("sauvegarde","w+");};
 int main(){
-    FILE* file=fopen("sauvegarde","w+");
-    // fseek(file,0,SEEK_SET);
-    char scoresauvegarder[255];
-    memset(scoresauvegarder,0,255);
-    fread(scoresauvegarder,1,255,file);
-    printf("%s\n\n\n",scoresauvegarder);
-    genEntropicSeed();
-    int random=0;
+    
     char joueur1 [255];
     char jeujoueur1 [255];
     enregistrement(joueur1);
+    
+    FILE* file=fopen(joueur1,"a+");
+    fclose(file);
 
-    // FILE* file=fopen("sauvegarde","w+");
-    // fprintf(file,"Joueur: %s\n",joueur1);
-    // char buf[255];
-    // memset(buf,0,255);
-    // fseek(file,0,SEEK_SET);
-    // fread(buf,1,255,file);
-    // fclose(file);
+    file=fopen(joueur1,"r");
+    fseek(file,0,SEEK_SET);
+
+    int scorejoueur1=0;
+    int scorePC=0;
+
+    fscanf(file,"Score de %s : %d\nScore du PC : %d",joueur1,&scorejoueur1,&scorePC);
+    fclose(file);
+
+    genEntropicSeed();
+
+    int random=0;
+    
 
     int hand_joueur_1 = 1;
-    int hand_joueur_2 = 1;
-    int scorejoueur1 =0;
-    int scorejoueur2 =0;
-    while (hand_joueur_1!=0 && hand_joueur_2!=0 )
+    // int hand_joueur_2 = 1;
+    while (hand_joueur_1!=0 )
     {
 
         random=aleatoire(1,4);
@@ -50,19 +49,17 @@ int main(){
         hand_joueur_1 = chartohand1(jeujoueur1,joueur1);
         if(hand_joueur_1 == 0) continue;
 
-        shifumi(jeujoueur1,random,joueur1,&scorejoueur1);
+        shifumi(jeujoueur1,random,joueur1,&scorejoueur1,&scorePC);
     }
+
     if (file!=NULL)
     {
-
-        fprintf(file,"Joueur: %s\nScore:%d",joueur1,scorejoueur1);
-        fseek(file,0,SEEK_SET);
-        char buf[255];
-        memset(buf,0,255);
-        fread(buf,1,255,file);
+        FILE* file=fopen(joueur1,"w");
+        fprintf(file,"Score de %s : %d\nScore du PC : %d",joueur1,scorejoueur1,scorePC);
         fclose(file);
-    }else{
+
     }
+
 };
 
 
@@ -141,7 +138,7 @@ int chartohand2 (int random){
 }
 
 
-void shifumi (char* jeujoueur1,int random, char* joueur1,int* scorejoueur1){
+void shifumi (char* jeujoueur1,int random, char* joueur1,int* scorejoueur1,int* scorePC){
     char buf[255];
     sprintf(buf,"%d",random);
    
@@ -149,40 +146,48 @@ void shifumi (char* jeujoueur1,int random, char* joueur1,int* scorejoueur1){
     {
         printf("La pierre bat le ciseaux !\n%s a gagné\n\n",joueur1);
         (*scorejoueur1)++;
-        printf("Score:\n%s : %d\n",joueur1,(*scorejoueur1));
-
+        printf("Score de %s : %d\n",joueur1,(*scorejoueur1));
+        printf("Score du PC : %d\n\n",(*scorePC));
     }
     else if(strcmp(jeujoueur1,"1")==0 && random==2)
     {
         printf("La feuille bat la pierre !\nPC a gagné\n\n");
-        printf("Score:\n%s : %d\n",joueur1,(*scorejoueur1));
+        (*scorePC)++;
+        printf("Score de %s : %d\n",joueur1,(*scorejoueur1));
+        printf("Score du PC : %d\n\n",(*scorePC));
     }
     else if(strcmp(jeujoueur1,"2")==0 && random==1)
     {
         printf("La feuille bat la pierre !\n%s a gagné\n\n",joueur1);
         (*scorejoueur1)++;
-        printf("Score:\n%s : %d\n",joueur1,(*scorejoueur1));
+        printf("Score de %s : %d\n",joueur1,(*scorejoueur1));
+        printf("Score du PC : %d\n\n",(*scorePC));
     }
     else if(strcmp(jeujoueur1,"2")==0 && random==3)
     {
         printf("Le ciseaux bat la feuille !\nPC a gagné\n\n");
-        printf("Score:\n%s : %d\n",joueur1,(*scorejoueur1));
+        (*scorePC)++;
+        printf("Score de %s : %d\n",joueur1,(*scorejoueur1));
+        printf("Score du PC : %d\n\n",(*scorePC));
     }
     else if(strcmp(jeujoueur1,"3")==0 && random==1)
     {
         printf("La pierre bat le ciseaux !\nPC a gagné\n\n");
-        printf("Score:\n%s : %d\n",joueur1,(*scorejoueur1));
+        (*scorePC)++;
+        printf("Score de %s : %d\n",joueur1,(*scorejoueur1));
+        printf("Score du PC : %d\n\n",(*scorePC));
     }
     else if(strcmp(jeujoueur1,"3")==0 && random==2)
     {
         printf("Le ciseaux bat la feuille !\n%s a gagné\n\n",joueur1);
         (*scorejoueur1)++;
-        printf("Score:\n%s : %d\n",joueur1,(*scorejoueur1));
+        printf("Score du PC : %d\n\n",(*scorePC));
     }
     else if(strcmp(jeujoueur1,buf)==0)
     {
         printf("Egalité !\n\n");
-        printf("Score:\n%s : %d\n",joueur1,(*scorejoueur1));
+        printf("Score de %s : %d\n",joueur1,(*scorejoueur1));
+        printf("Score du PC : %d\n\n",(*scorePC));
     }
     
 }
