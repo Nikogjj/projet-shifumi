@@ -13,31 +13,55 @@ void shifumi (char* jeujoueur1,int random, char* joueur1,int* scorejoueur1);
 int genEntropicSeed();
 float aleatoire(float minimum,float maximum);
 
+    
 
-
+    // void fichier(){FILE* file=fopen("sauvegarde","w+");};
 int main(){
+    FILE* file=fopen("sauvegarde","w+");
+    // fseek(file,0,SEEK_SET);
+    char scoresauvegarder[255];
+    memset(scoresauvegarder,0,255);
+    fread(scoresauvegarder,1,255,file);
+    printf("%s\n\n\n",scoresauvegarder);
     genEntropicSeed();
-    // int random=aleatoire(1,4);
     int random=0;
     char joueur1 [255];
-    // char joueur2 [255];
     char jeujoueur1 [255];
-    // char jeujoueur2 [255];
     enregistrement(joueur1);
+
+    // FILE* file=fopen("sauvegarde","w+");
+    // fprintf(file,"Joueur: %s\n",joueur1);
+    // char buf[255];
+    // memset(buf,0,255);
+    // fseek(file,0,SEEK_SET);
+    // fread(buf,1,255,file);
+    // fclose(file);
+
     int hand_joueur_1 = 1;
     int hand_joueur_2 = 1;
     int scorejoueur1 =0;
     int scorejoueur2 =0;
     while (hand_joueur_1!=0 && hand_joueur_2!=0 )
     {
+
         random=aleatoire(1,4);
-        // printf("%d",random);
         printf("%s ?\n1.Pierre\n2.Feuille\n3.Ciseaux\n0.Quitter\n\n",joueur1);
         jeu1(jeujoueur1);
         hand_joueur_1 = chartohand1(jeujoueur1,joueur1);
         if(hand_joueur_1 == 0) continue;
 
         shifumi(jeujoueur1,random,joueur1,&scorejoueur1);
+    }
+    if (file!=NULL)
+    {
+
+        fprintf(file,"Joueur: %s\nScore:%d",joueur1,scorejoueur1);
+        fseek(file,0,SEEK_SET);
+        char buf[255];
+        memset(buf,0,255);
+        fread(buf,1,255,file);
+        fclose(file);
+    }else{
     }
 };
 
