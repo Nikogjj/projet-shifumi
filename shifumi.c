@@ -6,7 +6,6 @@
 
 void enregistrement(char* joueur1);
 void jeu1(char* jeujoueur1);
-// void jeu2(char* jeujoueur2);
 int chartohand1 (char* jeujoueur1,char* joueur1);
 int chartohand2 (int random);
 void shifumi (char* jeujoueur1,int random, char* joueur1,int* scorejoueur1,int* scorePC);
@@ -39,7 +38,6 @@ int main(){
     
 
     int hand_joueur_1 = 1;
-    // int hand_joueur_2 = 1;
     while (hand_joueur_1!=0 )
     {
 
