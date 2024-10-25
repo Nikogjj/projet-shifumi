@@ -52,9 +52,10 @@ int main(){
 
     // if (file!=NULL)
     // {
-        file=fopen(joueur1,"w");
-        fprintf(file,"Score de %s : %d\nScore du PC : %d",joueur1,scorejoueur1,scorePC);
-        fclose(file);
+        if((file=fopen(joueur1,"w"))!=NULL){
+            fprintf(file,"Score de %s : %d\nScore du PC : %d",joueur1,scorejoueur1,scorePC);
+            fclose(file);
+        }
 
     // }
 
@@ -89,8 +90,8 @@ void jeu1(char* jeujoueur1){
 }
 
 int chartohand1 (char* jeujoueur1,char* joueur1){
-    while (1)
-    {
+    // while (1)
+    // {
         if (strcmp(jeujoueur1,"1")==0)
         {
             printf("%s a joué Pierre !\n\n",joueur1);
@@ -108,10 +109,10 @@ int chartohand1 (char* jeujoueur1,char* joueur1){
             printf("%s quitte le jeu ! Aurevoir.\n\n",joueur1);
             return 0;
         }
-        else{
-            printf("Veuillez rentrer une reponse valide\n");
-        }
-    }
+    //     else{
+    //         printf("Veuillez rentrer une reponse valide\n");
+    //     }
+    // }
 }
 
 int chartohand2 (int random){
