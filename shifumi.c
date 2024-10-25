@@ -50,13 +50,13 @@ int main(){
         shifumi(jeujoueur1,random,joueur1,&scorejoueur1,&scorePC);
     }
 
-    if (file!=NULL)
-    {
-        FILE* file=fopen(joueur1,"w");
+    // if (file!=NULL)
+    // {
+        file=fopen(joueur1,"w");
         fprintf(file,"Score de %s : %d\nScore du PC : %d",joueur1,scorejoueur1,scorePC);
         fclose(file);
 
-    }
+    // }
 
 };
 
